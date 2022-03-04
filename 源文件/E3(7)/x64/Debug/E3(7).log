@@ -1,0 +1,5 @@
+﻿  E3(7).cpp
+C:\Users\宁晨旭\source\repos\Experiment\E3(7)\E3(7).cpp(9,22): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
+C:\Users\宁晨旭\source\repos\Experiment\E3(7)\E3(7).cpp(18,30): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
+C:\Users\宁晨旭\source\repos\Experiment\E3(7)\E3(7).cpp(54,1): warning C4326: “main”的返回类型应为“int”而非“void”
+  E3(7).vcxproj -> C:\Users\宁晨旭\source\repos\Experiment\E1(1)\x64\Debug\E3(7).exe
