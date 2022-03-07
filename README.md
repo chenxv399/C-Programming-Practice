@@ -685,18 +685,351 @@ void main()
 }
 ```
 * （2）设计程序，调用函数fun，实现用冒泡法对6个字符串按由小到大的顺序进行排序。
+```
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+int maopao(int* a, int size)
+{
+	int i, j, t;
+	if (size <= 0) return -1;
+	if (a == NULL) return -1;
+	for (i = 0; i < size - 1; i++)
+	{
+		for (j = 0; j < size - 1 - i; j++)
+		{
+			if (a[j] > a[j + 1])
+			{
+				t = a[j];
+				a[j] = a[j + 1];
+				a[j + 1] = t;
+			}
+		}
+	}
+	return 0;
+}
 
+int main(int argc, const char* argv[])
+{
+	int i, ret, b[10] = { 0 };
+	printf("从终端输入10个数:");
+	for (i = 0; i < 10; i++)
+	{
+		scanf("%d", &b[i]);
+	}
+	printf("数组的内容:");
+	for (i = 0; i < 10; i++)
+	{
+		printf("%4d", b[i]);
+	}
+	printf("\n");
+	printf("数组升序排列后:");
+	ret = maopao(b, 10);
+	if (ret < 0)
+	{
+		printf("maopao is error\n");
+		exit(-1);
+	}
+	for (i = 0; i < 10; i++)
+	{
+		printf("%4d", b[i]);
+	}
+	printf("\n");
+	return 0;
+}
+```
 * （3）编写程序调用函数fun，函数fun的功能是：利用插入排序法对字符串中的字符按从小到大的顺序进行排序。编写主函数，输入输出在主函数中进行。
-
+```
+#include<stdio.h>
+#include<string.h>
+#define N 80
+void fun(char* a)
+{
+	int i, j, n;
+	char ch;
+	n = strlen(a);
+	for (i = 1; i < n; i++)
+	{
+		ch = a[i];
+		j = i - 1;
+		while ((j >= 0) && (ch < a[j]))
+		{
+			a[j + 1] = a[j];
+			j--;
+		}
+		a[j + 1] = ch;
+	}
+}
+void main()
+{
+	char a[N];
+	gets_s(a);
+	fun(a);
+	puts(a);
+}
+```
 * （4）编写一个函数，其功能是统计一个子字符串在另一个字符串中出现的次数。例如，假定输入的字符串为"this is a string"，子字符串为"is"，则应输出2。编写主函数，输入输出在主函数中进行。
-	
+```
+#include<stdio.h>
+int fun(char* a, char* b)
+{
+	char* p;
+	int n = 0;
+	while (*a)
+	{
+		p = b;
+		if (*a == *p)
+		{
+			while (*a == *p)
+			{
+				a++;
+				p++;
+				if (*p == '\0')
+				{
+					n++;
+				}
+			}
+		}
+		else
+		{
+			a++;
+		}
+	}
+	return n;
+}
+void main()
+{
+	char a[100], b[20];
+	gets_s(a);
+	gets_s(b);
+	printf("%d\n", fun(a, b));
+}
+```
 * （5）N个有序整数已放在一维数组中。采用函数利用折半查找算法查找整数m在数组中的位置。若找到返回其下标值；反之，返回-1。编写主函数实现函数调用。
-
+```
+#include<stdio.h>
+#pragma warning(disable : 4996)
+int fun(int* s, int m)
+{
+	int low = 0, high, mid;
+	high = sizeof(s) / 2;
+	mid = (low + high) / 2;
+	while (1)
+		if (m > s[mid])
+		{
+			low = mid + 1;
+			mid = (low + high) / 2;
+		}
+		else
+			if (m < s[mid])
+			{
+				high = mid - 1;
+				mid = (low + high) / 2;
+			}
+			else
+			{
+				return mid;
+			}
+	return -1;
+}
+void main()
+{
+	int a[100];
+	int b, i;
+	for (i = 0; i < 10; i++)
+		scanf("%d", &a[i]);
+	scanf("%d", &b);
+	printf("%d", fun(a, b));
+}
+```
 * （6）编写函数int*  fun(char* st)，其中st是仅由字符a、b和c组成的字符串。函数的功能是：统计字符串st中’a’、’b’和’c’的个数并分别存入不同的内存区，带回内存区的首地址。编写主函数实现函数调用。
+```
+#include<stdio.h>
+int* fun(char* st, int a[3])
+{
+	while (*st)
+	{
+		if (*st == 'a')
+		{
+			a[0]++;
+		}
+		if (*st == 'b')
+		{
+			a[1]++;
+		}
+		if (*st == 'c')
+		{
+			a[2]++;
+		}
+		st++;
+	}
+	return a;
+}
+void main()
+{
+	char a[100];
+	int b[3] = { 0,0,0 };
+	int i;
+	int* p;
+	gets_s(a);
+	p = fun(a, b);
+	for (i = 0; i < 3; i++)
+		printf("%d,", *p++);
+}
+```
+# 实验5：多维数组与文件操作
+任务1：以指针操作数组及基本矩阵运算
+任务2：文件操作 
+1. 目的
+（1）能灵活采用指针操作数组。
+（2）能采用二维数组，解决基本矩阵运算问题。
+（3）能进行基本文件操作
+2. 步骤
+对于任务中的每个问题，分析并设计解题思路，合理设置变量，设计数组，合理设计函数参数，编制程序，运行得到正确结果。
+3. 内容：基本问题程序设计5
+
+* （1）编写函数，其功能是：实现矩阵（3行3列）的转置（即行列互换）。例如，原矩阵为:[1 2 3 4 5 6 7 8 9]
+ ，则转置后的矩阵为：[1 4 7 2 5 8 3 6 9] 。然后编写主函数调用它
+```
+#include<stdio.h>
+#pragma warning(disable : 4996)
+void main()
+{
+	int a[3][3], i, j;
+	for (i = 0; i < 9; i++)
+		scanf("%d", &a[0][0] + i);
+	for (i = 0; i < 9; i++)
+	{
+		printf("%2d", a[0][0] + i);
+		if (i % 3 == 2)
+			printf("\n");
+	}
+	for (i = 0; i < 3; i++)
+	{
+		for (j = 0; j < 3; j++)
+		{
+			printf("%2d", a[j][i]);
+			if (j == 2)
+				printf("\n");
+		}
+	}
+}
+```
+* （2）编写函数void  fun ( int  aa[ ], int  x, int  *n )，它的功能是：删除数组aa中所有与x相等的元素，数组元素个数由n传入。编写主函数，输入输出在主函数中进行。
+```
+#include<stdio.h>
+#pragma warning(disable : 4996)
+void fun(int aa[], int x, int* n)
+{
+    int i, j;
+    for (i = 0; i < *n; i++)
+    {
+        if (aa[i] == x)
+        {
+            for (j = i; j < *n - 1; j++)
+                aa[j] = aa[j + 1];
+            (*n)--;
+            i--;
+        }
+    }
+}
+void main()
+{
+    int a[100], x;
+    int n, i;
+    printf("Please enter the number of array elements:");
+    scanf("%d", &n);
+    printf("Please enter the array:");
+    for (i = 0; i < n; i++)
+        scanf("%d", &a[i]);
+    printf("Please enter the deleted elements:");
+    scanf("%d", &x);
+    fun(a, x, &n);
+    for (i = 0; i < n; i++)
+        printf("%2d", a[i]);
+}
+```
+* （3）编函数void  fun(int  *a, int  *b)，它的功能是：求出1到100之内被7或11整除的所有整数放在数组a中，通过n返回这些数的个数。编写主函数，输入输出在主函数中进行。
+#include <stdio.h> 
+void fun(int* a, int* b)
+{
+	int i;
+	for (i = 1; i <= 100; i++)
+		if (i % 7 == 0 || i % 11 == 0)
+		{
+			*a = i;
+			a++;
+			(*b)++;
+		}
+}
+
+int main()
+{
+	int i, n = 0;
+	int m[100];
+	fun(m, &n);
+	printf("%d\n", n);
+	for (i = 0; i < n; i++)
+		printf("%d", m[i]);
+	return 0;
+}
+```
+* （4）编写函数int fun (int lim, int aa[MAX] )，该函数的功能是求出小于lim的所有素数并放在aa数组中，该函数返回所求出素数的个数。然后编写主函数调用它。
+```
+#include<stdio.h>
+#pragma warning(disable : 4996)
+int fun(int lim, int aa[100])
+{
+	int i, MAX = 0, j;
+	for (i = 0; i <= lim; i++)
+	{
+		for (j = 2; j < i; j++)
+		{
+			if (i % j == 0)
+				break;
+			if (i == j + 1)
+			{
+				aa[MAX] = i;
+				MAX++;
+			}
+		}
+	}
+	return MAX;
+}
+void main()
+{
+	int lim, aa[100];
+	scanf("%d", &lim);
+	printf("%d", fun(lim, aa));
+}
+```
+* （5）输入一个3行3列矩阵的所有元素，然后输出对角线元素之和。
+```
+#include<stdio.h>
+#pragma warning(disable : 4996)
+void main()
+{
+	int a[3][3];
+	int i, j, s = 0;
+	for (i = 0; i < 3; i++)
+		for (j = 0; j < 3; j++)
+		{
+			scanf("%d", &a[i][j]);
+		}
+	for (i = 0; i < 3; i++)
+	{
+		s += a[i][i];
+	}
+	printf("%d", s);
+}
+```
+* （6）信息加密。编写加密程序，对用户从键盘输入的信息（不少于20个单词）以学号尾号为秘钥进行加密（例：学号尾号为3，输入信息I am z……，则密文为L dp c……，尾号为0则秘钥为10），将密文存入文本文件。
+
+* （7）解密。编写程序，将已加密的文件读出并解密后存入另一文件。
 
 
-# 未完待续
-   
+
+
  
 
  
