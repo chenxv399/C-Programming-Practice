@@ -950,6 +950,7 @@ void main()
 }
 ```
 * （3）编函数void  fun(int  *a, int  *b)，它的功能是：求出1到100之内被7或11整除的所有整数放在数组a中，通过n返回这些数的个数。编写主函数，输入输出在主函数中进行。
+```
 #include <stdio.h> 
 void fun(int* a, int* b)
 {
@@ -1028,6 +1029,220 @@ void main()
 * （7）解密。编写程序，将已加密的文件读出并解密后存入另一文件。
 
 
+# 实验6：递归与链表
+任务1：递归函数设计
+任务2：链表操作
+1. 目的
+（1）能够使用递归方法设计函数。
+（2）能设计较复杂的数据结构，实现链表操作，并解决与内存应用相关的问题。
+2. 步骤
+对于任务中的每个问题，分析并设计解题思路，合理设置结构体，尝试动态分配内存，编制程序，实现链表操作，运行程序得到正确结果。
+3. 内容：基本问题程序设计6
+
+* （1）请编写函数int fun(double a[ ], int k, int m, double x)，它的功能是：用递归方法在数组a中查找x是否出现，其中数组a的元素已按由大到小的次序排序，k和m是数组的最小和最大下标，函数采用二分查找算法，若找到则返回1，否则返回0。然后编写主函数调用它。
+```
+#include<stdio.h>
+#include<malloc.h>
+typedef struct node
+{
+    int data;
+    struct node* next;
+}NODE;
+#define LEN sizeof(NODE)
+NODE* setup()
+{
+    NODE* head = NULL, * p1, * p2;
+    int n = 0;
+    p2 = (NODE*)malloc(LEN);
+    p1 = p2;
+    scanf("%d", &p1->data);
+    while (p1->data)
+    {
+        n++;
+        if (n == 1)
+        {
+            head = p1;
+        }
+        else
+        {
+            p2->next = p1;
+            p2 = p1;
+        }
+        p1 = (NODE*)malloc(LEN);
+        scanf("%d", &p1->data);
+    }
+    p2->next = NULL;
+    return head;
+}
+
+int main()
+{
+    NODE* p;
+    p = setup();
+    while (p)
+    {
+        printf("%d，", p->data);
+        p = p->next;
+    }
+}
+```
+* （2）用递归法将一个整数n转换成字符串。例如，输入整数483，应输出字符串“483”。
+```
+#include<stdio.h>
+#pragma warning(disable : 4996)
+void fun(int n)
+{
+	if (n / 10 == 0)
+	{
+		putchar('0' + n % 10);
+	}
+	else
+	{
+		fun(n / 10);
+		putchar('0' + n % 10);
+	}
+}
+void main()
+{
+	int m;
+	scanf("%d", &m);
+	fun(m);
+}
+```
+* （3）编写一个函数，函数fun的功能是：输入一个整数x，计算x的平方和立方。例如，输入10，则应输出a=10  a2=100  a3=1000。然后编写主函数调用它。
+```
+#include<stdio.h>
+#pragma warning(disable : 4996)
+void fun(int s)
+{
+	int i, a[2];
+	a[0] = s * s;
+	a[1] = s * s * s;
+	for (i = 0; i < 2; i++)
+		printf("%d\n", a[i]);
+}
+void main()
+{
+	int s;
+	scanf("%d", &s);
+	fun(s);
+}
+```
+* （4）学生的记录由学号和成绩组成，N名学生的数据已在主函数中放入结构体数组s中，请编写函数fun，它的功能是：把分数最低的学生数据放在h所指的数组中，注意：分数最低的学生可能不止一个，函数返回分数最低的学生的人数。编写主函数，输入输出在主函数中进行。
+```
+#include<stdio.h>
+#define N 3
+typedef struct Stu
+{
+    char NO[10];
+    int score;
+} Stu;
+int fun(Stu* s, Stu* h)
+{
+    Stu min;
+    min = s[0];
+    int i, c = 0;
+    for (i = 0; i < N; i++)
+    {
+        if (min.score > s[i].score)
+            min = s[i];
+    }
+    for (i = 0; i < N; i++)
+    {
+        if (s[i].score == min.score)
+        {
+            *(h + c) = s[i];
+            c++;
+        }
+    }
+    return c;
+}
+int main()
+{
+    Stu s[N] = { {"181203101", 97}, {"181203102", 96}, {"181203103", 98} };
+    Stu h[N];
+    int num, i;
+    num = fun(s, h);
+    printf("The number is: %d\n", num);
+    for (i = 0; i < num; i++)
+    {
+        printf("%s  %4d\n", h[i].NO, h[i].score);
+    }
+}
+```
+* （5）建立一个单向链表，链表中的每个结点有一个int类型的数据域，输入0时标志链表建立过程结束。例如，输入1  2  3  4  0，则应输出1,2,3,4,。
+```
+#include<stdio.h>
+#include<malloc.h>
+typedef struct node
+{
+    int data;
+    struct node* next;
+}NODE;
+#define LEN sizeof(NODE)
+NODE* setup()
+{
+    NODE* head = NULL, * p1, * p2;
+    int n = 0;
+    p2 = (NODE*)malloc(LEN);
+    p1 = p2;
+    scanf("%d", &p1->data);
+    while (p1->data)
+    {
+        n++;
+        if (n == 1)
+        {
+            head = p1;
+        }
+        else
+        {
+            p2->next = p1;
+            p2 = p1;
+        }
+        p1 = (NODE*)malloc(LEN);
+        scanf("%d", &p1->data);
+    }
+    p2->next = NULL;
+    return head;
+}
+
+int main()
+{
+    NODE* p;
+    p = setup();
+    while (p)
+    {
+        printf("%d，", p->data);
+        p = p->next;
+    }
+}
+```
+
+# 实验7：应用程序设计基础
+略
+
+# 实验8：应用程序设计实践
+任务：确定一个应用程序设计任务并实现
+1. 目的
+（1）能够设计结构体变量构造链表。
+（2）能通过查阅资料构思有一定实用背景和规模的链表操作算法。
+（3）能分析和评价所设计的解决方案及代码的质量。
+（4）撰写符合规范的实验报告。
+2. 步骤
+(1) 教师讲解链表应用程序设计思路。
+(2) 学生查阅资料，探索完善单链表实用程序设计思路。
+(3) 学生根据前期查阅资料情况和个人兴趣，选择一个实用程序设计题目。
+(4) 撰写实验报告。
+
+3. 内容：应用程序设计（在下述任务中任选其一完成，也可自选类似题目，由导师批准后自行完成，撰写实验报告）
+* （1）时钟模拟程序设计
+设计要求：设计一个时钟表盘，能及时读取系统的时间，并根据当前时间计算并绘制出在时钟表盘上时钟时针、分针和秒针的具体位置，形成时钟运转动画。
+* （2）计算器程序的设计
+设计要求：实现一个计算器功能的程序。能够用C语言提供的图形库函数绘制计算器界面、基本的运算程序、计算界面数据数据、运算符定位和刷新功能。
+* （3）五子棋对战游戏设计
+设计要求：实现利用计算机评判两个人五子棋比赛游戏、用C语言提供的图形库函数实现绘制五子棋棋盘，实现五子棋规则评判算法。
+* （4）单链表基本算法实现程序
+设计要求：定义单链表数据结构、实现单链表的建立、销毁、查找、插入、删除、排序算法、利用单链表的算法实现多项式相加减应用。
 
 
  
