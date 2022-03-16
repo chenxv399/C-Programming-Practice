@@ -1244,6 +1244,77 @@ int main()
 * （4）单链表基本算法实现程序
 设计要求：定义单链表数据结构、实现单链表的建立、销毁、查找、插入、删除、排序算法、利用单链表的算法实现多项式相加减应用。
 
+>本人选择的是计算器程序设计，参考材料并进行改进写出如下代码，以下代码仅为计算机核心运算脚本。但由于知识匮乏，本人无法绘制出可视化图形界面，敬请谅解。如有大神能够完整制作出该程序，欢迎改进如下代码。
+```
+#include <stdio.h>
+#include <math.h>
+#pragma warning(disable : 4996)
+void main(void) 
+{
+	int c = 1;
+	float operationA = 0;
+	float operationB = 0;
+	int isContinue = 1;
+	while (isContinue) 
+	{
+		printf("请输入第一个运算数字:\t");
+		scanf("%f", &operationA);
+		printf("请选择你要进行的运算类型：1加法，2减法，3乘法，4除法，5平方，6开方\n");
+		scanf("%d", &c);
+		if (c < 1 || c>6)
+		{
+			printf("请正确选择运算！");
+			break;
+		}
+		if (c ==1||c==2||c==3||c==4)
+		{
+			printf("请输入第二个运算数字:\t");
+			scanf("%f", &operationB);
+		}
+		if (c == 1) 
+		{
+			printf("%f + %f = %f\n", operationA, operationB, operationA + operationB);
+		}
+		else if (c == 2)
+		{
+			printf("%f - %f = %f\n", operationA, operationB, operationA - operationB);
+		}
+		else if (c == 3) 
+		{
+			printf("%f * %f = %f\n", operationA, operationB, operationA * operationB);
+		}
+		else if (c == 4)
+		{
+			while (operationB == 0) {
+				printf("除数不能为零！请重新输入第二个数：");
+				scanf("%f", &operationB);
+			}
+			printf("%f / %f = %f\n", operationA, operationB, operationA / operationB);
+		}
+		else if (c == 5)
+		{
+			float medianvalue1 = 0;
+			medianvalue1 = pow(operationA, 2);
+			printf("%f", medianvalue1);
+		}
+		else if (c == 6)
+		{
+			float medianvalue2 = 0;
+			medianvalue2 = sqrt(operationA);
+			printf("%f", medianvalue2);
+		}
+		printf("\n\n");
+		printf("你是否还要继续进行运算：是：1 否：0 \n");
+		scanf("%d", &isContinue);
+		if (isContinue == 0) 
+		{
+			isContinue = 0;
+		}
+	}
+	
+}
+```
+
 
  
 
